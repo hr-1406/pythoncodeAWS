@@ -1,17 +1,19 @@
 from flask import Flask,render_template,request
 import boto3
 import pymysql
+import os 
 
 app = Flask(__name__)
 
-bucket_name="student-photo-demo-gopu"
+bucket_name = os.environ.get("S3_BUCKET_NAME")
 
-db=pymysql.connect(
-host="mystudentdb.cvcwkw064xyz.us-east-1.rds.amazonaws.com",
-user="admin",
-password="Admin123",
-database="studentdb"
+db = pymysql.connect(
+    host=os.environ.get("DB_HOST"),
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASSWORD"),
+    database=os.environ.get("DB_NAME", "studentdb")
 )
+
 
 @app.route('/')
 def home():
